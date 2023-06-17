@@ -1,4 +1,4 @@
-export const cont_address="0x0D1ffDC7b428E9514EE492d216b85EE3b62D5e64";
+export const cont_address="0x774002Cc3754029d2c913Fc1f7E67a258Fa94bBC";
 export const Token_address="0xc16b32F200eA3c91E06c016e3F19738459F74146";
 
 export const cont_abi=[
@@ -126,6 +126,19 @@ export const cont_abi=[
 			}
 		],
 		"name": "curr_packageOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "curr_time",
 		"outputs": [
 			{
 				"internalType": "uint256",

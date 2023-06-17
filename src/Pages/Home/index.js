@@ -28,6 +28,7 @@ import {
   tokenABI,
   Token_address,
 } from "../../../src/components/config";
+import { set } from "mongoose";
 const Main = (props) => {
   const [loader, setLoader] = useState(false);
 
@@ -37,6 +38,10 @@ const Main = (props) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [verify, set_verify] = useState(false);
+  const [time, set_time] = useState(false);
+  const [curr_time, set_curr_time] = useState(false);
+
+
   const [response, set_response] = useState({
     "userAddress": {
         "country": "",
@@ -118,8 +123,11 @@ const Main = (props) => {
       console.log("object7");
 
       let upliner_id = await props.contract.methods.addresstoId(upliner).call();
+      let time = await props.contract.methods.time_manager(upliner).call();
+
       let curr_package = await props.contract.methods.curr_packageOf(props.address).call();
       console.log("object8");
+      let curr_time = await props.contract.methods.curr_time().call();
 
 
       let total_earning_withdrawabl;
@@ -165,14 +173,14 @@ const Main = (props) => {
         .call();
         set_user(users)
         set_curr_package(curr_package)
-
+        set_time(time)
         set_withdrawable_earning(total_earning_withdrawabl)  
         set_sponsored(sponsored_earning)
         set_matchingBonus(matchingBonus)
         set_dualTeam(dualTeam_balance)
         // set_totalRef(user.total_ref)
-        console.log(dualTeam_balance[0]._currweek_Left_balance);
-
+        console.log("curr time "+curr_time);
+        set_curr_time(curr_time)
         set_lsb(dualTeam_balance[0]._currweek_Left_balance);
         set_rsb(dualTeam_balance[0]._currweek_right_balance);
 
@@ -295,7 +303,7 @@ const Main = (props) => {
 
   const handleClick = () => {
     // console.log("what is e", e);
-    navigator.clipboard.writeText("http://localhost:3000/?ref="+userId);
+    navigator.clipboard.writeText("https://global.vercel.app/?ref="+userId);
 
     setShowMessage(true);
     setIsButtonDisabled(true);
@@ -512,7 +520,7 @@ const Main = (props) => {
               <div className="link-box flex items-center">
                 <div className="link-left flex items-center">
                   <div className="link-lbl">Referral Link:</div>
-                  <div className="link-code">http://localhost:3000/?ref={userId}</div>
+                  <div className="link-code">https://global.vercel.app/?ref={userId}</div>
                 </div>
                 <div className="link-right items-center">
                   <button
@@ -638,6 +646,9 @@ const Main = (props) => {
           balance={withdrawable_earning}
           handleWithdraw={handleWithdraw}
           // verify={props.verified}
+          time={time}
+          curr_time={curr_time}
+
           verify={true}
 
 
